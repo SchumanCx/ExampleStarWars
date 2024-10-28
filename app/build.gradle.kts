@@ -62,6 +62,13 @@ dependencies {
 
     implementation(libs.androidx.navigation.compose)
 
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    kapt(libs.androidx.room.compiler) {
+        // Exclude, because room compiler uses older version than already existing frameworks
+        exclude("com.intellij", "annotations")
+    }
+
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)

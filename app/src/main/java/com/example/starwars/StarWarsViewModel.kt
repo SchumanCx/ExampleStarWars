@@ -12,11 +12,5 @@ import javax.inject.Inject
 class StarWarsViewModel @Inject constructor(private val repository: StarWarsRepository) :
     ViewModel() {
 
-    val rootData: Flow<DataResult<Map<String, String>>> = repository.getRootData()
-
-    // todo
-    fun getNextPageData(url: String): Flow<DataResult<Map<String, String>>> =
-        repository.getNextPageData(url)
-
     fun getPeople(): Flow<DataResult<List<Person>>> = repository.getPeople()
 }

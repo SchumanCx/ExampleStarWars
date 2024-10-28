@@ -1,8 +1,10 @@
 package com.example.starwars.api
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -22,6 +24,11 @@ class ApiModule {
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
+
+    @Provides
+    @Singleton
+    fun provideDatabase(@ApplicationContext context: Context): StarWarsDatabase =
+        StarWarsDatabase.getInstance(context)
 
     @Provides
     @Singleton
