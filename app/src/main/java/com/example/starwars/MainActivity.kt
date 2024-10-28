@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.starwars.navigation.PeopleScreen
 import com.example.starwars.navigation.StarWarsScreen
+import com.example.starwars.ui.StarWarsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

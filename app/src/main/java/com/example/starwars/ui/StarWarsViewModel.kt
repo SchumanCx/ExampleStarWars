@@ -1,4 +1,4 @@
-package com.example.starwars
+package com.example.starwars.ui
 
 import androidx.lifecycle.ViewModel
 import com.example.starwars.api.DataResult

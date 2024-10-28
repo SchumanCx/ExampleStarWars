@@ -27,11 +27,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.starwars.StarWarsViewModel
+import com.example.starwars.R
+import com.example.starwars.ui.StarWarsViewModel
 import com.example.starwars.api.DataResult
 import com.example.starwars.model.Person
+import com.example.starwars.ui.CharacterListItem
 import kotlinx.coroutines.launch
 
 @Composable
@@ -50,7 +53,7 @@ fun PeopleScreen(viewModel: StarWarsViewModel, navController: NavController) {
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text("Star Wars People")
+                    Text(stringResource(R.string.people_screen_heading))
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -60,7 +63,7 @@ fun PeopleScreen(viewModel: StarWarsViewModel, navController: NavController) {
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Localized description"
+                            contentDescription = stringResource(R.string.navigate_back_content_description)
                         )
                     }
                 }
@@ -71,7 +74,7 @@ fun PeopleScreen(viewModel: StarWarsViewModel, navController: NavController) {
         }
     ) { innerPadding ->
         when (result) {
-            is DataResult.Loading -> Text(text = "Loading...")
+            is DataResult.Loading -> Text(text = stringResource(R.string.loading))
 
             is DataResult.Success -> {
                 val people = (result as DataResult.Success).data
@@ -82,11 +85,12 @@ fun PeopleScreen(viewModel: StarWarsViewModel, navController: NavController) {
             is DataResult.Error<*> -> {
                 val people = (result as DataResult.Error<List<Person>>).data
                 val error = (result as DataResult.Error<List<Person>>).exception.message
+                val apiErrorMessage = stringResource(R.string.api_call_failed)
 
                 LaunchedEffect(result) {
                     scope.launch {
                         snackbarHostState.showSnackbar(
-                            message = error ?: "Api call failed",
+                            message = error ?: apiErrorMessage,
                             duration = SnackbarDuration.Short
                         )
                     }
@@ -105,12 +109,16 @@ private fun List(
 ) {
     LazyColumn(
         modifier = Modifier.padding(
-            vertical = innerPadding.calculateTopPadding() + 16.dp,
-            horizontal = 16.dp,
+            top = innerPadding.calculateTopPadding() + 16.dp,
+            start = 16.dp,
+            end = 16.dp
         )
     ) {
         items(people) { person ->
-            Text(text = person.name)
+            CharacterListItem(
+                person = person,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
         }
     }
 }

@@ -54,6 +54,8 @@ dependencies {
     implementation(libs.squareup.retrofit)
     implementation(libs.squareup.converter)
 
+    implementation(libs.google.gson)
+
     implementation(libs.dagger.hilt)
     kapt(libs.dagger.hilt.compiler)
 
