@@ -1,14 +1,11 @@
 package com.example.starwars.api
 
+import com.example.starwars.model.PersonResponse
 import retrofit2.http.GET
-import retrofit2.http.Path
 
 interface StarWarsService {
 
-    @GET("/")
-    suspend fun getRoot(): Map<String, String>
-
-    @GET("{path}")
-    suspend fun getNextPage(@Path("path") url: String): Map<String, String>
+    @GET("people/")
+    suspend fun getPeople(): PersonResponse
 
 }

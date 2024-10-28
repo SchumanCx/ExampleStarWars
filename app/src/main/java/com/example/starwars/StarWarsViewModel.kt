@@ -3,6 +3,7 @@ package com.example.starwars
 import androidx.lifecycle.ViewModel
 import com.example.starwars.api.DataResult
 import com.example.starwars.api.StarWarsRepository
+import com.example.starwars.model.Person
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -13,6 +14,9 @@ class StarWarsViewModel @Inject constructor(private val repository: StarWarsRepo
 
     val rootData: Flow<DataResult<Map<String, String>>> = repository.getRootData()
 
+    // todo
     fun getNextPageData(url: String): Flow<DataResult<Map<String, String>>> =
         repository.getNextPageData(url)
+
+    fun getPeople(): Flow<DataResult<List<Person>>> = repository.getPeople()
 }
