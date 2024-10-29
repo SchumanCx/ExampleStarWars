@@ -31,21 +31,29 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.starwars.R
-import com.example.starwars.ui.StarWarsViewModel
 import com.example.starwars.api.DataResult
 import com.example.starwars.model.Person
 import com.example.starwars.ui.CharacterListItem
+import com.example.starwars.ui.StarWarsViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun PeopleScreen(viewModel: StarWarsViewModel, navController: NavController) {
+fun PeopleScreen(
+    viewModel: StarWarsViewModel,
+    navController: NavController,
+    personIds: List<Int>
+) {
     var result by remember { mutableStateOf<DataResult<List<Person>>>(DataResult.Loading) }
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
-        viewModel.getPeople().collect { peopleList ->
-            result = peopleList
+        if (personIds.isEmpty()) {
+            viewModel.getPeople().collect { peopleList ->
+                result = peopleList
+            }
+        } else {
+            //todo: request specific people
         }
     }
 

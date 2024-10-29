@@ -13,8 +13,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.starwars.R
 import com.example.starwars.model.ButtonData
 import com.example.starwars.ui.NavigationButton
 
@@ -24,8 +26,10 @@ fun StarWarsScreen(navController: NavHostController) {
         ButtonData("People") {
             navController.navigate("people")
         },
+        ButtonData("Films") {
+            navController.navigate("films")
+        },
         ButtonData("Planets", {}),
-        ButtonData("Films", {}),
         ButtonData("Species", {}),
         ButtonData("Vehicles", {}),
         ButtonData("Starships", {})
@@ -34,7 +38,7 @@ fun StarWarsScreen(navController: NavHostController) {
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text("Star Wars API")
+                    Text(stringResource(R.string.star_wars_screen_title))
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,

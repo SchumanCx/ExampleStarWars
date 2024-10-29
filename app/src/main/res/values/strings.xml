@@ -12,4 +12,6 @@
     <string name="navigate_back_content_description">Go back</string>
     <string name="loading">Loading…</string>
     <string name="api_call_failed">Api call failed</string>
+    <string name="star_wars_screen_title">Star Wars API</string>
+    <string name="film_screen_heading">Star Wars Films</string>
 </resources>

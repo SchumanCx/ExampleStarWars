@@ -1,8 +1,8 @@
 package com.example.starwars.model
 
-data class PersonResponse(
+data class PageResponse<Data>(
     val count: Int,
     val next: String?,
     val previous: String?,
-    val results: List<Person>
+    val results: Data
 )
