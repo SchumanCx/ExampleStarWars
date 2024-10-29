@@ -5,11 +5,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
+import androidx.navigation.toRoute
 import com.example.starwars.navigation.FilmScreen
 import com.example.starwars.navigation.PeopleScreen
 import com.example.starwars.navigation.StarWarsScreen
@@ -26,48 +25,27 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
-            NavHost(navController = navController, startDestination = "root") {
-                composable(route = "root") {
+            NavHost(navController = navController, startDestination = StarWarsScreen) {
+                composable<StarWarsScreen> {
                     StarWarsScreen(navController = navController)
                 }
-                composable(
-                    route = "people?{personIds}",
-                    arguments = listOf(navArgument("personIds") {
-                        type = NavType.IntListType
-                        defaultValue = emptyList<Int>()
-                    })
-                ) {
+                composable<PeopleScreen> {
+                    val args = it.toRoute<PeopleScreen>()
                     PeopleScreen(
                         viewModel = viewModel,
                         navController = navController,
-                        personIds = it.arguments?.getIntegerArrayList("personIds") ?: emptyList()
+                        personIds = args.personIds
                     )
                 }
-                composable(
-                    route = "films?{filmIds}",
-                    arguments = listOf(navArgument("filmIds") {
-                        type = NavType.IntListType
-                        defaultValue = emptyList<Int>()
-                    })
-                ) {
+                composable<FilmScreen> {
+                    val args = it.toRoute<FilmScreen>()
                     FilmScreen(
                         viewModel = viewModel,
                         navController = navController,
-                        filmIds = it.arguments?.getIntegerArrayList("filmIds") ?: emptyList()
+                        filmIds = args.filmIds
                     )
                 }
-                composable(route = "planets") {
-                    // PlanetsScreen()
-                }
-                composable(route = "species") {
-                    // SpeciesScreen()
-                }
-                composable(route = "vehicles") {
-                    // VehiclesScreen()
-                }
-                composable(route = "starships") {
-                    // StarshipsScreen()
-                }
+                // add others
             }
         }
     }

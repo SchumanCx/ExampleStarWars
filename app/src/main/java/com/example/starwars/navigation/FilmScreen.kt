@@ -2,6 +2,7 @@
 
 package com.example.starwars.navigation
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -27,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -36,6 +38,12 @@ import com.example.starwars.model.Film
 import com.example.starwars.ui.FilmListItem
 import com.example.starwars.ui.StarWarsViewModel
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class FilmScreen(
+    val filmIds: List<Int>
+)
 
 @Composable
 fun FilmScreen(
@@ -46,6 +54,7 @@ fun FilmScreen(
     var result by remember { mutableStateOf<DataResult<List<Film>>>(DataResult.Loading) }
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         if (filmIds.isEmpty()) {
@@ -54,6 +63,7 @@ fun FilmScreen(
             }
         } else {
             //todo: request specific films
+            Toast.makeText(context, "Requesting specific films: $filmIds", Toast.LENGTH_SHORT).show()
         }
     }
 

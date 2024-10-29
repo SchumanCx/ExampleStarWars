@@ -19,15 +19,19 @@ import androidx.navigation.NavHostController
 import com.example.starwars.R
 import com.example.starwars.model.ButtonData
 import com.example.starwars.ui.NavigationButton
+import kotlinx.serialization.Serializable
+
+@Serializable
+object StarWarsScreen
 
 @Composable
 fun StarWarsScreen(navController: NavHostController) {
     val navigationList = listOf(
         ButtonData("People") {
-            navController.navigate("people")
+            navController.navigate(PeopleScreen(listOf()))
         },
         ButtonData("Films") {
-            navController.navigate("films")
+            navController.navigate(FilmScreen(listOf()))
         },
         ButtonData("Planets", {}),
         ButtonData("Species", {}),

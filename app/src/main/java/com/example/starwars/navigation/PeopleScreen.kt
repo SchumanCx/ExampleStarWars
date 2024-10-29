@@ -36,6 +36,12 @@ import com.example.starwars.model.Person
 import com.example.starwars.ui.CharacterListItem
 import com.example.starwars.ui.StarWarsViewModel
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class PeopleScreen(
+    val personIds: List<Int>
+)
 
 @Composable
 fun PeopleScreen(
@@ -87,7 +93,7 @@ fun PeopleScreen(
             is DataResult.Success -> {
                 val people = (result as DataResult.Success).data
 
-                List(innerPadding, people)
+                List(innerPadding, navController, people)
             }
 
             is DataResult.Error<*> -> {
@@ -104,7 +110,7 @@ fun PeopleScreen(
                     }
                 }
 
-                List(innerPadding, people)
+                List(innerPadding, navController, people)
             }
         }
     }
@@ -113,6 +119,7 @@ fun PeopleScreen(
 @Composable
 private fun List(
     innerPadding: PaddingValues,
+    navController: NavController,
     people: List<Person>
 ) {
     LazyColumn(
@@ -125,6 +132,7 @@ private fun List(
         items(people) { person ->
             CharacterListItem(
                 person = person,
+                navController = navController,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
         }

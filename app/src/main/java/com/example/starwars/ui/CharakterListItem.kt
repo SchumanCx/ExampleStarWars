@@ -24,17 +24,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.starwars.R
 import com.example.starwars.model.Person
+import com.example.starwars.navigation.FilmScreen
 
 @Composable
 fun CharacterListItem(
     person: Person,
+    navController: NavController,
     modifier: Modifier = Modifier
 ) {
     var readMore by remember { mutableStateOf(false) }
-    val navController = rememberNavController()
 
     Surface(
         color = MaterialTheme.colorScheme.primaryContainer,
@@ -99,7 +101,10 @@ fun CharacterListItem(
                 Column {
                     ReadMoreInfo(
                         text = "Films",
-                        onClick = { },
+                        onClick = {
+                            val filmIds = extractFilmIds(person.films)
+                            navController.navigate(FilmScreen(filmIds))
+                        },
                         contentDescription = "Open films"
                     )
                     ReadMoreInfo(
@@ -120,6 +125,13 @@ fun CharacterListItem(
                 }
             }
         }
+    }
+}
+
+fun extractFilmIds(urls: List<String>): List<Int> {
+    val regex = Regex("(?<=\\/)\\d+(?=\\/?\$)")
+    return urls.mapNotNull { url ->
+        regex.find(url)?.value?.removeSurrounding("/")?.toIntOrNull()
     }
 }
 
@@ -144,7 +156,8 @@ private fun CharacterListItemPreview() {
                 species = listOf("bla"),
                 vehicles = listOf("bla"),
                 starships = listOf("bla"),
-            )
+            ),
+            rememberNavController()
         )
     }
 }
